@@ -110,9 +110,9 @@ export function Network() {
               <g key={n.label}>
                 <circle cx={n.p.x} cy={n.p.y} r={3.4} fill="var(--paper)" stroke="var(--ink)" strokeWidth={0.5} />
                 <text
-                  x={n.p.x}
+                  x={n.p.x < 30 ? 3 : n.p.x > 70 ? 97 : n.p.x}
                   y={n.p.y + (n.p.y > 50 ? 9 : n.p.y < 50 ? -6 : 8)}
-                  textAnchor="middle"
+                  textAnchor={n.p.x < 30 ? "start" : n.p.x > 70 ? "end" : "middle"}
                   className="fill-muted text-[3px] uppercase tracking-[0.3em]"
                 >
                   {n.label}
