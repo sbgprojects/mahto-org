@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./capabl.css";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { Smooth } from "./ui";
 
 const sans = Manrope({
   variable: "--cb-sans",
@@ -21,5 +24,12 @@ export const viewport: Viewport = {
 };
 
 export default function CapablLayout({ children }: { children: React.ReactNode }) {
-  return <div className={`cb ${sans.variable}`}>{children}</div>;
+  return (
+    <div className={`cb ${sans.variable}`}>
+      <Smooth />
+      <Header />
+      {children}
+      <Footer />
+    </div>
+  );
 }

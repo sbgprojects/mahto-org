@@ -20,14 +20,6 @@ export const img = {
   hack: u("photo-1519389950473-47ba0277781c", 1400),
 };
 
-export const nav = [
-  { l: "Initiatives", h: "#initiatives" },
-  { l: "Impact", h: "#impact" },
-  { l: "Updates", h: "#updates" },
-  { l: "Stories", h: "#stories" },
-  { l: "Media", h: "#media" },
-];
-
 // Placeholder ecosystem marks — replace with real recognition logos.
 export const recognitions = [
   "NORTHBRIDGE", "Axiom Labs", "MERIDIAN", "vertex.", "Orbital", "SIGMA & CO",
@@ -72,6 +64,8 @@ export const initiatives = [
     img: img.ai,
     a: "Student & Faculty Programs",
     b: "AI Centre of Excellence",
+    ha: "/capabl/agentic-ai/students",
+    hb: "/capabl/agentic-ai/centre-of-excellence",
   },
   {
     k: "EV",
@@ -80,6 +74,8 @@ export const initiatives = [
     img: img.ev,
     a: "Student & Faculty Programs",
     b: "EV Centre of Excellence",
+    ha: "/capabl/ev/students",
+    hb: "/capabl/host/ev-saksham",
   },
 ];
 

@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import {
   built,
   img,
   initiatives,
   media,
-  nav,
   news,
   outcomes,
   partners,
@@ -16,93 +16,7 @@ import {
   voices,
   why,
 } from "./data";
-import { Arrow, CountUp, ImageReveal, Lines, Photo, Play, Reveal, Smooth, smooth } from "./ui";
-
-/* ================= header ================= */
-function Header() {
-  const [solid, setSolid] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const on = () => setSolid(window.scrollY > 48);
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
-  }, []);
-
-  useEffect(() => {
-    if (open) smooth.lenis?.stop();
-    else smooth.lenis?.start();
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      smooth.lenis?.start();
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
-  return (
-    <>
-      <header className={`cb-header ${solid && !open ? "is-solid" : ""} ${open ? "is-open" : ""}`}>
-        <div className="cb-wrap cb-header-in">
-          <a href="#top" className="cb-logo" aria-label="Capabl home" onClick={() => setOpen(false)}>
-            capabl<i />
-          </a>
-          <nav className="cb-nav" aria-label="Primary">
-            {nav.map((n) => (
-              <a key={n.h} href={n.h}>
-                {n.l}
-              </a>
-            ))}
-          </nav>
-          <a href="#meet" className="cb-btn cb-btn-solid cb-header-cta">
-            Book an Institutional Meeting
-          </a>
-          <button
-            type="button"
-            className="cb-burger"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span />
-            <span />
-          </button>
-        </div>
-      </header>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="cb-drawer"
-            data-lenis-prevent
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
-          >
-            <ul>
-              {nav.map((n, i) => (
-                <motion.li
-                  key={n.h}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.08 + i * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <a href={n.h} onClick={() => setOpen(false)}>
-                    {n.l}
-                  </a>
-                </motion.li>
-              ))}
-            </ul>
-            <a href="#meet" className="cb-btn cb-btn-light" onClick={() => setOpen(false)}>
-              Book an Institutional Meeting <Arrow />
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
-}
+import { Arrow, CountUp, ImageReveal, Lines, Photo, Play, Reveal, smooth } from "./ui";
 
 /* ================= 1 · hero ================= */
 function Hero() {
@@ -254,12 +168,12 @@ function Initiatives() {
                   <h3>{p.t}</h3>
                   <p>{p.d}</p>
                   <div className="cb-chips">
-                    <a href="#meet" className="cb-chip">
+                    <Link href={p.ha} className="cb-chip">
                       {p.a}
-                    </a>
-                    <a href="#meet" className="cb-chip cb-chip-solid">
+                    </Link>
+                    <Link href={p.hb} className="cb-chip cb-chip-solid">
                       {p.b}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -556,31 +470,9 @@ function Finale() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="cb-footer">
-      <div className="cb-wrap cb-footer-in">
-        <a href="#top" className="cb-logo cb-logo-light" aria-label="Capabl home">
-          capabl<i />
-        </a>
-        <nav aria-label="Footer">
-          {nav.map((n) => (
-            <a key={n.h} href={n.h}>
-              {n.l}
-            </a>
-          ))}
-        </nav>
-        <p>© {new Date().getFullYear()} Capabl. Institution transformation partner.</p>
-      </div>
-    </footer>
-  );
-}
-
 export function Capabl() {
   return (
     <>
-      <Smooth />
-      <Header />
       <main>
         <Hero />
         <Recognitions />
@@ -595,7 +487,6 @@ export function Capabl() {
         <Media />
         <Finale />
       </main>
-      <Footer />
     </>
   );
 }
