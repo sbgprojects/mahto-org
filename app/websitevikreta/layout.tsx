@@ -10,9 +10,9 @@ const display = Anton({ variable: "--wv-display", subsets: ["latin"], weight: "4
 const sans = Inter_Tight({ variable: "--wv-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Website Vikreta — AI-First Web, Automation & Growth Agency",
+  title: "Website Vikreta — IT Consulting, Web & AI Automation",
   description:
-    "Website Vikreta is a Pune-based AI-first digital agency. Websites, AI automation, apps and CRMs, UI/UX design and SEO & GEO, from one team.",
+    "Website Vikreta is a Pune-based IT consulting and product studio: AI apps and automations, web design and development, CRMs and web applications, UI/UX, SEO & GEO.",
 };
 
 export const viewport: Viewport = {
