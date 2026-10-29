@@ -10,13 +10,13 @@ const display = Anton({ variable: "--wv-display", subsets: ["latin"], weight: "4
 const sans = Inter_Tight({ variable: "--wv-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Website Vikreta — Digital Marketing & Creative Studio",
+  title: "Website Vikreta — AI-First Web, Automation & Growth Agency",
   description:
-    "Website Vikreta is a Pune-based digital marketing and creative studio. Brand, performance marketing, social, content and SEO under one roof.",
+    "Website Vikreta is a Pune-based AI-first digital agency. Websites, AI automation, apps and CRMs, UI/UX design and SEO & GEO, from one team.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0b0c",
+  themeColor: "#f6f4ee",
   width: "device-width",
   initialScale: 1,
 };

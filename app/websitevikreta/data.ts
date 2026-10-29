@@ -1,277 +1,545 @@
-/* Website Vikreta — content. Every string and photo on the page lives here. */
+/* Website Vikreta — content. Every string, link and image on the site lives here. */
 
 const u = (id: string, w = 1200) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=75`;
+const local = (p: string) => `/websitevikreta/${p}`;
+
+export const BASE = "/websitevikreta";
+
+export const brand = {
+  logo: local("logo.svg"),
+  logoLight: local("logo-light.svg"),
+};
 
 export const img = {
-  studio: u("photo-1522071820081-009f0129c71c", 2000),
+  ai: u("photo-1662974770404-468fd9660389", 1400),
+  web: u("photo-1585076641399-5c06d1b3365f", 1400),
+  code: u("photo-1484417894907-623942c8ee29", 1400),
+  studio: u("photo-1522071820081-009f0129c71c", 1600),
   huddle: u("photo-1568992687947-868a62a9f521", 1400),
   table: u("photo-1521737604893-d14cc237f11d", 1400),
   review: u("photo-1622675363311-3e1904dc1885", 1400),
-  crew: u("photo-1758906819465-b2fde39d715d", 1200),
-  lipstick: u("photo-1586495777744-4413f21062fa", 1200),
-  lipstickDark: u("photo-1645961359170-c01fa306aa6b", 1200),
-  beauty: u("photo-1723150512429-bfa92988d845", 1400),
-  piccadilly: u("photo-1760180139823-527522243bae", 1600),
-  timesSquare: u("photo-1777022335097-4a1825907364", 1200),
-  busStop: u("photo-1635873432087-50eba4c4392d", 1200),
-  creator: u("photo-1694813646506-135688fc24e4", 1200),
-  podcast: u("photo-1764664035163-f8f29058e557", 1200),
   analytics: u("photo-1551288049-bebda4e38f71", 1400),
   stats: u("photo-1460925895917-afdab827c52f", 1400),
   moodboard: u("photo-1690733546551-1007bc0a3414", 1400),
   swatch: u("photo-1664638413302-d1ca29ac885b", 1400),
-  sneaker: u("photo-1600185365483-26d7a4cc7519", 1400),
-  coffee: u("photo-1584736286279-5d85d32ba79d", 1400),
-  coffeeBag: u("photo-1563382931489-e77a18817459", 1400),
-  p1: u("photo-1581065178047-8ee15951ede6", 800),
-  p2: u("photo-1560250097-0b93528c311a", 800),
-  p3: u("photo-1758783505014-eb44b02a711a", 800),
-  p4: u("photo-1770510067230-1059f0776b3a", 800),
+  phone: u("photo-1610548822783-33fb5cb0e3a8", 1400),
+  laptop: u("photo-1608222351212-18fe0ec7b13b", 1400),
+  dashboard: u("photo-1526628953301-3e589a6a8b74", 1400),
 };
 
-export const BASE = "/websitevikreta";
+export const contact = {
+  email: "contact@websitevikreta.com",
+  phone: "+91 99704 45198",
+  whatsapp: "https://wa.me/919970445198",
+  calendly: "https://calendly.com/shubham-websitevikreta/new-meeting",
+  upwork: "https://www.upwork.com/ag/websitevikreta",
+  instagram: "https://instagram.com/websitevikreta",
+  linkedin: "https://linkedin.com/company/websitevikreta",
+  city: "Pune, India",
+};
 
-/* ---------- navigation (mega menu) ---------- */
-export type Leaf = { t: string; href: string; tag?: string };
-export type Group = { title: string; blurb: string; href: string; leaves: Leaf[] };
+/* ---------- services + mega menu ----------
+   Shape follows the agreed navbar: service → solutions → leaves, plus extras and proof. */
+export type Leaf = { t: string; slug: string; tag?: string };
+export type Solution = { title: string; slug: string; blurb: string; leaves: Leaf[] };
+export type Extra = { t: string; slug: string; sub?: string };
 export type Service = {
   id: string;
+  slug: string;
   title: string;
-  kicker: string;
+  short: string;
   blurb: string;
-  href: string;
   image: string;
-  proof: { label: string; metric: string };
-  groups: Group[];
+  chips: string[];
+  solutions: Solution[];
+  extras: Extra[];
+  proof: { label: string; metric: string; slug: string };
+  cta: string;
 };
-
-const s = (slug: string) => `${BASE}/services/${slug}`;
 
 export const services: Service[] = [
   {
-    id: "brand",
-    title: "Brand & Creative",
-    kicker: "Look like the leader",
-    blurb: "Identity systems, campaign ideas and art direction that make a category notice you.",
-    href: s("brand-creative"),
-    image: img.moodboard,
-    proof: { label: "Kaapi Co. rebrand", metric: "+212% repeat orders" },
-    groups: [
+    id: "ai",
+    slug: "ai-automations",
+    title: "AI Automations",
+    short: "Workflows, AI agents, WhatsApp, AI UGC",
+    blurb: "Fixed-scope projects that take repetitive work off your team, built on the tools you already use.",
+    image: img.ai,
+    chips: ["Workflows", "WhatsApp AI agents", "AI UGC"],
+    solutions: [
       {
-        title: "Brand Identity",
-        blurb: "Naming, logo, voice and the rules that keep it all consistent.",
-        href: s("brand-creative/identity"),
+        title: "E-commerce Content Automation",
+        slug: "ecommerce-content-automation",
+        blurb: "Turn product photos into ready-to-post creatives in bulk.",
         leaves: [
-          { t: "Brand strategy & positioning", href: s("brand-creative/strategy") },
-          { t: "Logo & visual systems", href: s("brand-creative/visual-identity") },
-          { t: "Packaging design", href: s("brand-creative/packaging") },
+          { t: "Bulk product image automation", slug: "bulk-product-image-automation" },
+          { t: "AI UGC video ads", slug: "ai-ugc-video-ads" },
+          { t: "AI product visuals", slug: "ai-product-visuals" },
         ],
       },
       {
-        title: "Campaign Creative",
-        blurb: "Big ideas cut down for every screen they need to run on.",
-        href: s("brand-creative/campaigns"),
+        title: "Lead Response & Booking",
+        slug: "lead-response-booking",
+        blurb: "Answer every enquiry in minutes, on WhatsApp and by phone.",
         leaves: [
-          { t: "Concept & art direction", href: s("brand-creative/art-direction") },
-          { t: "Photo & film production", href: s("brand-creative/production") },
-          { t: "Motion & 3D", href: s("brand-creative/motion"), tag: "New" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "performance",
-    title: "Performance Marketing",
-    kicker: "Spend less per customer",
-    blurb: "Paid media run by people who read the numbers daily and change the creative weekly.",
-    href: s("performance-marketing"),
-    image: img.analytics,
-    proof: { label: "Stride Footwear", metric: "4.6× ROAS in 90 days" },
-    groups: [
-      {
-        title: "Paid Social",
-        blurb: "Meta, Instagram, YouTube and LinkedIn with a creative testing engine behind them.",
-        href: s("performance-marketing/paid-social"),
-        leaves: [
-          { t: "Meta & Instagram ads", href: s("performance-marketing/meta-ads") },
-          { t: "YouTube & CTV", href: s("performance-marketing/youtube") },
-          { t: "LinkedIn B2B", href: s("performance-marketing/linkedin") },
+          { t: "WhatsApp AI agent", slug: "whatsapp-ai-agent" },
+          { t: "AI receptionist (voice)", slug: "ai-receptionist", tag: "New" },
+          { t: "Missed call recovery", slug: "missed-call-recovery" },
         ],
       },
       {
-        title: "Search & Commerce",
-        blurb: "Capture demand where people are already looking to buy.",
-        href: s("performance-marketing/search"),
+        title: "Hiring & Onboarding Automation",
+        slug: "hiring-onboarding-automation",
+        blurb: "Offer letters, NDAs and onboarding without the paperwork chase.",
         leaves: [
-          { t: "Google Ads & PMax", href: s("performance-marketing/google-ads") },
-          { t: "Amazon & marketplace ads", href: s("performance-marketing/marketplace") },
-          { t: "CRO & landing pages", href: s("performance-marketing/cro") },
+          { t: "Offer letter automation", slug: "offer-letter-automation" },
+          { t: "Candidate screening", slug: "candidate-screening-automation" },
         ],
+      },
+      {
+        title: "Document & Proposal Automation",
+        slug: "document-proposal-automation",
+        blurb: "Generate proposals and contracts from a form or CRM record.",
+        leaves: [{ t: "Proposal generation", slug: "proposal-generation-automation" }],
       },
     ],
-  },
-  {
-    id: "social",
-    title: "Social & Content",
-    kicker: "Be worth the follow",
-    blurb: "Always-on social, short-form video and creator partnerships that people actually save.",
-    href: s("social-content"),
-    image: img.creator,
-    proof: { label: "Glow Theory launch", metric: "38M organic views" },
-    groups: [
-      {
-        title: "Social Media",
-        blurb: "Calendar, community and reporting, handled end to end.",
-        href: s("social-content/social-media"),
-        leaves: [
-          { t: "Social strategy & management", href: s("social-content/management") },
-          { t: "Reels & short-form video", href: s("social-content/short-form") },
-          { t: "Community management", href: s("social-content/community") },
-        ],
-      },
-      {
-        title: "Influence & UGC",
-        blurb: "Creators matched to your audience, briefed and paid on results.",
-        href: s("social-content/influence"),
-        leaves: [
-          { t: "Influencer campaigns", href: s("social-content/influencers") },
-          { t: "UGC ad production", href: s("social-content/ugc"), tag: "New" },
-        ],
-      },
+    extras: [
+      { t: "Pricing", slug: "pricing" },
+      { t: "Platforms", slug: "platforms", sub: "Make, n8n, WhatsApp API" },
     ],
+    proof: { label: "Simpli Home, 20 hours cut to 1", metric: "20h → 1h", slug: "simpli-home" },
+    cta: "Book a free process audit",
   },
   {
     id: "web",
-    title: "Web & SEO",
-    kicker: "Get found, then convert",
-    blurb: "Fast, good-looking websites built to rank on Google and get cited by AI search.",
-    href: s("web-seo"),
-    image: img.stats,
-    proof: { label: "Northwind Clinics", metric: "3.1× organic leads" },
-    groups: [
+    slug: "web-development",
+    title: "Web Development",
+    short: "Fast, SEO-ready business websites",
+    blurb: "Custom, SEO-ready websites for growing businesses. Fast to load, written to rank, built around how you sell.",
+    image: img.web,
+    chips: ["Business websites", "E-commerce", "SEO-ready"],
+    solutions: [
       {
-        title: "Websites",
-        blurb: "Marketing sites and stores that load fast and sell harder.",
-        href: s("web-seo/websites"),
+        title: "Business Websites",
+        slug: "business-websites",
+        blurb: "Marketing sites that load in under a second and turn visits into enquiries.",
         leaves: [
-          { t: "Website design & build", href: s("web-seo/web-design") },
-          { t: "Shopify & D2C stores", href: s("web-seo/shopify") },
+          { t: "Company & service websites", slug: "company-websites" },
+          { t: "Landing pages that convert", slug: "landing-pages" },
+          { t: "Website redesign", slug: "website-redesign" },
         ],
       },
       {
-        title: "Search Visibility",
-        blurb: "Technical, content and authority work that compounds.",
-        href: s("web-seo/search"),
+        title: "E-commerce Stores",
+        slug: "ecommerce-development",
+        blurb: "Stores built to sell, with the integrations your operations need.",
         leaves: [
-          { t: "SEO audits & strategy", href: s("web-seo/seo") },
-          { t: "AI search (GEO)", href: s("web-seo/geo"), tag: "New" },
-          { t: "Content marketing", href: s("web-seo/content") },
+          { t: "Shopify store development", slug: "shopify-development" },
+          { t: "WooCommerce stores", slug: "woocommerce-development" },
+          { t: "Headless commerce", slug: "headless-commerce", tag: "New" },
+        ],
+      },
+      {
+        title: "CMS & Performance",
+        slug: "cms-performance",
+        blurb: "Sites your team can edit, that stay fast as they grow.",
+        leaves: [
+          { t: "Next.js & Webflow builds", slug: "nextjs-webflow" },
+          { t: "Core Web Vitals optimisation", slug: "speed-optimisation" },
+          { t: "Care & maintenance plans", slug: "website-maintenance" },
         ],
       },
     ],
+    extras: [
+      { t: "Pricing", slug: "pricing" },
+      { t: "Stacks", slug: "stacks", sub: "Next.js, Shopify, Webflow, WordPress" },
+    ],
+    proof: { label: "AP Cleanco, zero to online", metric: "Top 3 local", slug: "ap-cleanco" },
+    cta: "Get a free website audit",
+  },
+  {
+    id: "apps",
+    slug: "apps-crm",
+    title: "Apps & CRM",
+    short: "Custom CRMs, portals, internal tools",
+    blurb: "Custom CRMs, customer portals, internal tools and web apps built around how your business actually runs.",
+    image: img.dashboard,
+    chips: ["Custom CRM", "Portals", "Internal tools"],
+    solutions: [
+      {
+        title: "Custom CRM",
+        slug: "custom-crm",
+        blurb: "One place for leads, deals and follow-ups, shaped to your sales process.",
+        leaves: [
+          { t: "Sales & lead CRM", slug: "sales-crm" },
+          { t: "Real estate CRM", slug: "real-estate-crm" },
+          { t: "HubSpot & Zoho customisation", slug: "crm-customisation" },
+        ],
+      },
+      {
+        title: "Web Applications",
+        slug: "web-applications",
+        blurb: "Portals and SaaS products, from MVP to the version customers pay for.",
+        leaves: [
+          { t: "Customer & partner portals", slug: "customer-portals" },
+          { t: "SaaS MVP development", slug: "saas-mvp" },
+          { t: "Booking & scheduling platforms", slug: "booking-platforms" },
+        ],
+      },
+      {
+        title: "Internal Tools & Mobile",
+        slug: "internal-tools",
+        blurb: "Replace the spreadsheet that runs your business.",
+        leaves: [
+          { t: "Admin dashboards", slug: "admin-dashboards" },
+          { t: "Inventory & ops tools", slug: "ops-tools" },
+          { t: "iOS & Android apps", slug: "mobile-apps", tag: "New" },
+        ],
+      },
+    ],
+    extras: [
+      { t: "Pricing", slug: "pricing" },
+      { t: "Integrations", slug: "integrations", sub: "Stripe, Razorpay, WhatsApp, Zapier" },
+    ],
+    proof: { label: "Cozmo Realty listings CRM", metric: "3× faster follow-ups", slug: "cozmo-realty" },
+    cta: "Scope your app in a free call",
+  },
+  {
+    id: "uiux",
+    slug: "uiux-design",
+    title: "UI/UX Design",
+    short: "Research, product design, design systems",
+    blurb: "User research, wireframes and product design for web and mobile. Design systems your developers can actually ship.",
+    image: img.swatch,
+    chips: ["Research", "Product design", "Design systems"],
+    solutions: [
+      {
+        title: "Research & Strategy",
+        slug: "ux-research",
+        blurb: "Find out where users get stuck before redesigning anything.",
+        leaves: [
+          { t: "UX audit", slug: "ux-audit" },
+          { t: "User interviews & testing", slug: "user-testing" },
+          { t: "Information architecture", slug: "information-architecture" },
+        ],
+      },
+      {
+        title: "Product Design",
+        slug: "product-design",
+        blurb: "Interfaces for web apps, dashboards and mobile that feel obvious.",
+        leaves: [
+          { t: "SaaS & dashboard UI", slug: "saas-ui-design" },
+          { t: "Mobile app design", slug: "mobile-app-design" },
+          { t: "Interactive prototypes", slug: "prototyping" },
+        ],
+      },
+      {
+        title: "Design Systems",
+        slug: "design-systems",
+        blurb: "Components and rules that keep every new screen consistent.",
+        leaves: [
+          { t: "Figma design systems", slug: "figma-design-systems" },
+          { t: "Component libraries", slug: "component-libraries" },
+          { t: "Design for AI agents", slug: "agent-ready-ux", tag: "New" },
+        ],
+      },
+    ],
+    extras: [
+      { t: "Pricing", slug: "pricing" },
+      { t: "Tools", slug: "tools", sub: "Figma, Framer, Maze" },
+    ],
+    proof: { label: "Sustainable Bitcoin Protocol", metric: "MVP → Product", slug: "sustainable-bitcoin-protocol" },
+    cta: "Get a free UX audit",
+  },
+  {
+    id: "seo",
+    slug: "seo-geo",
+    title: "SEO & GEO",
+    short: "Google rankings and AI search citations",
+    blurb: "Organic growth only. Rank on Google, get cited by ChatGPT and Perplexity, and turn search traffic into enquiries.",
+    image: img.analytics,
+    chips: ["Technical SEO", "GEO", "Local SEO"],
+    solutions: [
+      {
+        title: "Search Engine Optimisation",
+        slug: "seo",
+        blurb: "Technical fixes and content that move rankings, then hold them.",
+        leaves: [
+          { t: "Technical SEO audit", slug: "technical-seo-audit" },
+          { t: "Local SEO & Google Business", slug: "local-seo" },
+          { t: "On-page & content SEO", slug: "on-page-seo" },
+        ],
+      },
+      {
+        title: "Generative Engine Optimisation",
+        slug: "geo",
+        blurb: "Become the source AI answers quote when buyers ask about your category.",
+        leaves: [
+          { t: "ChatGPT & Perplexity visibility", slug: "ai-search-visibility", tag: "New" },
+          { t: "Google AI Overviews", slug: "ai-overviews" },
+          { t: "Schema & entity SEO", slug: "schema-entity-seo" },
+        ],
+      },
+      {
+        title: "Content Engine",
+        slug: "content",
+        blurb: "Articles and pages written to rank, get cited and convert.",
+        leaves: [
+          { t: "Content strategy & blogs", slug: "content-strategy" },
+          { t: "Programmatic SEO", slug: "programmatic-seo" },
+        ],
+      },
+    ],
+    extras: [
+      { t: "Pricing", slug: "pricing" },
+      { t: "AI visibility check", slug: "ai-visibility-check", sub: "Free report" },
+    ],
+    proof: { label: "Budget Renovations local search", metric: "+184% organic leads", slug: "budget-renovations" },
+    cta: "Get a free SEO & GEO audit",
+  },
+  {
+    id: "brand",
+    slug: "branding",
+    title: "Branding & Content",
+    short: "Identity, copy, decks and creatives",
+    blurb: "Brand identity, website copy and launch creatives so everything we build looks and sounds like you.",
+    image: img.moodboard,
+    chips: ["Identity", "Copywriting", "Pitch decks"],
+    solutions: [
+      {
+        title: "Brand Identity",
+        slug: "brand-identity",
+        blurb: "Logo, colour, type and a guide your team will actually use.",
+        leaves: [
+          { t: "Logo & visual identity", slug: "logo-design" },
+          { t: "Brand guidelines", slug: "brand-guidelines" },
+          { t: "Packaging & print", slug: "packaging-design" },
+        ],
+      },
+      {
+        title: "Content & Copy",
+        slug: "content-copy",
+        blurb: "Words that sell, for the site, the deck and the launch.",
+        leaves: [
+          { t: "Website copywriting", slug: "website-copywriting" },
+          { t: "Pitch decks & presentations", slug: "pitch-decks" },
+          { t: "Social creatives", slug: "social-creatives" },
+        ],
+      },
+    ],
+    extras: [{ t: "Pricing", slug: "pricing" }],
+    proof: { label: "Blancora brand launch", metric: "Live in 4 weeks", slug: "blancora" },
+    cta: "Talk to our design team",
   },
 ];
 
+export const svcHref = (s: Service, ...rest: string[]) => [BASE, "services", s.slug, ...rest].join("/");
+
 export const navLinks = [
-  { t: "Work", href: `${BASE}#work` },
-  { t: "Process", href: `${BASE}#process` },
-  { t: "Studio", href: `${BASE}#team` },
-  { t: "Insights", href: `${BASE}/insights` },
+  { t: "Work", href: `${BASE}/work` },
+  { t: "About", href: `${BASE}/about` },
+  { t: "Blog", href: `${BASE}/blog` },
+  { t: "Careers", href: `${BASE}/careers` },
 ];
 
 /* ---------- home ---------- */
-export const heroWords = ["unskippable", "unforgettable", "scroll-stopping", "the obvious pick"];
+export const heroWords = ["grow your business", "save 20 hours a week", "get cited by ChatGPT", "your team will love"];
 
-export const marqueeA = ["Brand", "Performance", "Social", "Content", "SEO", "Web", "Influence", "Film"];
-export const marqueeB = ["Kaapi Co.", "Stride", "Glow Theory", "Northwind", "Lumen Labs", "Ferm & Co", "Oddbird", "Halcyon"];
+export const clients = [
+  { name: "Simpli Home", src: local("logos/simpli-home.svg") },
+  { name: "Sustainable Bitcoin Protocol", src: local("logos/sustainable-bitcoin-protocol.svg") },
+  { name: "Champion Lenders", src: local("logos/champion-lenders.svg") },
+  { name: "AP Cleanco", src: local("logos/ap-cleanco.svg") },
+  { name: "Cozmo Realty", src: local("logos/cozmo-realty.svg") },
+  { name: "Archmodal", src: local("logos/archmodal.svg") },
+  { name: "Workik", src: local("logos/workik.svg") },
+  { name: "Ambrosia Life Sciences", src: local("logos/ambrosia.svg") },
+  { name: "Blancora", src: local("logos/blancora.svg") },
+  { name: "Boompanda", src: local("logos/boompanda.png") },
+  { name: "Budget Renovations", src: local("logos/budget-renovations.svg") },
+  { name: "Katalyst", src: local("logos/katalyst.png") },
+  { name: "Limra Events", src: local("logos/limra-events.png") },
+  { name: "Raicoon", src: local("logos/raicoon.svg") },
+  { name: "SR Design Hub", src: local("logos/sr-design-hub.svg") },
+  { name: "Strandzboost", src: local("logos/strandzboost.svg") },
+  { name: "Tocal", src: local("logos/tocal.svg") },
+];
+
+export const tools = [
+  { name: "OpenAI", src: local("tools/01-OpenAI.svg") },
+  { name: "Claude", src: local("tools/02-Claude.svg") },
+  { name: "Gemini", src: local("tools/17-Gemini.svg") },
+  { name: "Cursor", src: local("tools/06-Cursor.svg") },
+  { name: "n8n", src: local("tools/15-n8n.svg") },
+  { name: "Make.com", src: local("tools/16-MakeDotCom.svg") },
+  { name: "ElevenLabs", src: local("tools/18-ElevenLabs.svg") },
+  { name: "Kling AI", src: local("tools/28-KlingAI.svg") },
+];
+
+export const marquee = ["AI Automations", "Web Development", "Apps & CRM", "UI/UX Design", "SEO & GEO", "Branding"];
 
 export const manifesto =
-  "Most marketing is wallpaper. People scroll past it without blinking. We make the work they stop for, then measure what it did to sales, not likes.";
+  "We design, build and grow the systems your business runs on: the website, the automation behind it, and the organic marketing that brings in leads. One team, from first audit to handover.";
 
 export const stats = [
-  { n: 240, suffix: "+", label: "Campaigns launched" },
-  { n: 4.6, suffix: "×", label: "Average return on ad spend", decimals: 1 },
-  { n: 92, suffix: "%", label: "Clients who stay past year one" },
-  { n: 1.2, suffix: "B", label: "Impressions served last year", decimals: 1 },
+  { n: 5, suffix: "+", label: "Years working with founders and teams across the globe" },
+  { n: 68, suffix: "+", label: "Projects shipped: websites, apps, automation, design" },
+  { n: 6360, suffix: "+", label: "Hours saved for clients since we went AI-first" },
+  { n: 100, suffix: "%", label: "Job Success score on Upwork, Top Rated" },
 ];
 
 export const work = [
   {
-    client: "Kaapi Co.",
-    title: "A coffee brand people line up for",
-    tags: ["Rebrand", "Packaging", "Social"],
-    metric: "+212%",
-    metricLabel: "repeat orders",
-    image: img.coffee,
-    year: "2026",
+    client: "Simpli Home",
+    title: "Bulk media generation, automated",
+    body: "A media team doing bulk content generation by hand. We automated the whole pipeline inside Figma Buzz. The work just started happening faster.",
+    tags: ["AI Automation", "Media Ops"],
+    from: "20h",
+    to: "1h",
+    metricLabel: "Image production time per collection. 11 hours saved every week.",
+    image: img.laptop,
+    logo: local("logos/simpli-home.svg"),
+    slug: "simpli-home",
   },
   {
-    client: "Stride Footwear",
-    title: "From launch to sold out in 11 days",
-    tags: ["Performance", "UGC", "Shopify"],
-    metric: "4.6×",
-    metricLabel: "ROAS",
-    image: img.sneaker,
-    year: "2026",
+    client: "Sustainable Bitcoin Protocol",
+    title: "From MVP to a product people actually use",
+    body: "Rough flows, no design system, unclear product. We went in at the foundation and rebuilt everything, then handed engineering a system they could ship from.",
+    tags: ["UI/UX Design", "Design System"],
+    from: "MVP",
+    to: "Product",
+    metricLabel: "120+ screens on one design system. Dev handoff time cut in half.",
+    image: img.swatch,
+    logo: local("logos/sustainable-bitcoin-protocol.svg"),
+    slug: "sustainable-bitcoin-protocol",
   },
   {
-    client: "Glow Theory",
-    title: "A lipstick drop that broke the feed",
-    tags: ["Launch", "Influence", "Film"],
-    metric: "38M",
-    metricLabel: "organic views",
-    image: img.lipstickDark,
-    year: "2025",
+    client: "AP Cleanco",
+    title: "Zero to online. Properly.",
+    body: "A garage cleaning company with no web presence at all. We built the marketing site from scratch. Local SEO baked in, loads fast, written to convert.",
+    tags: ["Website", "Local SEO"],
+    from: "Zero",
+    to: "Online",
+    metricLabel: "Top 3 in local search within 10 weeks. Calls now come from the site.",
+    image: img.web,
+    logo: local("logos/ap-cleanco.svg"),
+    slug: "ap-cleanco",
   },
   {
-    client: "Lumen Labs",
-    title: "Out of home, onto every phone",
-    tags: ["OOH", "Campaign", "Paid social"],
-    metric: "61%",
-    metricLabel: "lift in branded search",
-    image: img.piccadilly,
-    year: "2025",
+    client: "Cozmo Realty",
+    title: "A CRM built around how agents sell",
+    body: "Leads spread across WhatsApp, spreadsheets and inboxes. We built one CRM with automated follow-ups, so no enquiry sits unanswered overnight.",
+    tags: ["Custom CRM", "WhatsApp API"],
+    from: "5 tools",
+    to: "1 CRM",
+    metricLabel: "Follow-ups three times faster. Every lead has an owner.",
+    image: img.dashboard,
+    logo: local("logos/cozmo-realty.svg"),
+    slug: "cozmo-realty",
   },
 ];
 
 export const process = [
-  { n: "01", t: "Dig", d: "Two weeks in your data, your reviews and your competitors' ads. We find the one thing worth saying." },
-  { n: "02", t: "Make", d: "Ideas, scripts and designs built in sprints. You see real work in week three, not a deck." },
-  { n: "03", t: "Launch", d: "Everything goes live with tracking wired in, so every rupee is accounted for from day one." },
-  { n: "04", t: "Scale", d: "Weekly creative tests. Winners get budget, losers get cut. Results compound every month." },
+  { n: "01", t: "We watch", d: "How the work actually gets done today, not how it's supposed to work on paper." },
+  { n: "02", t: "We find the time sink", d: "The exact step eating the hours, and whether automation is even the right fix." },
+  { n: "03", t: "We build, quietly", d: "No disruption to the work still running while we build. You see progress every week." },
+  { n: "04", t: "We hand it over", d: "Documentation, a walkthrough, and a system your team owns. No dependency on us to keep it alive." },
 ];
 
-export const testimonials = [
+export const why = [
+  { t: "We audit before we build", d: "If a $50 tool solves it, that's what we'll tell you, instead of inventing a reason to charge you more." },
+  { t: "One team, no hand-offs", d: "We build the site, then we build what runs behind it. No handoff to a second agency halfway through." },
+  { t: "You own what we build", d: "Your accounts, your data, your access. Documentation and a proper handover, not a dependency on us." },
+  { t: "We've done the messy version", d: "Spreadsheet chaos, tools that won't talk to each other, exports renamed by hand. That's most of the real work." },
+];
+
+export const testimonials: { quote: string; name: string; role: string; avatar: string | null }[] = [
   {
-    quote: "They rebuilt our brand and our ad account in the same quarter. Sales doubled and the team finally has something to be proud of.",
-    name: "Ananya Rao",
-    role: "Founder, Kaapi Co.",
-    avatar: img.p1,
+    quote: "Our team finally does the work we hired them for. Game changer.",
+    name: "Darcy McGilvery",
+    role: "Simpli Home",
+    avatar: null,
   },
   {
-    quote: "The first agency that talks to us about margin, not impressions. Every report ends with what they are changing next week.",
-    name: "Rohan Mehta",
-    role: "CMO, Stride Footwear",
-    avatar: img.p2,
+    quote: "Website Vikreta did really nice work. They have really fast hands. They finished our new website design in the given time, always responded quickly and have a really good sense of design.",
+    name: "John Kim",
+    role: "CEO, Champion Lenders",
+    avatar: local("testimonials/John_Kim.webp"),
   },
   {
-    quote: "Fast, sharp and properly honest. They killed two of our favourite ideas because the data said so, and they were right.",
-    name: "Isha Kulkarni",
-    role: "Head of Brand, Glow Theory",
-    avatar: img.p3,
+    quote: "They have excellent design skills. They quickly prototyped the design I had in mind and then programmed it, and adjusted well as requirements changed.",
+    name: "Abhinav Singh",
+    role: "Co-founder, JAXL, India",
+    avatar: local("testimonials/Abhinav_Singh.webp"),
+  },
+  {
+    quote: "One of the best web development services out there. The team completes each project by giving personal attention to the smallest details.",
+    name: "Rudra Ghodke",
+    role: "Founder, MetaThumbz",
+    avatar: local("testimonials/Rudra_Ghodke.webp"),
+  },
+  {
+    quote: "My second time working with Website Vikreta. Even if I don't explain the design I want, they know exactly what style I want.",
+    name: "Sang Hyun Han",
+    role: "Full Stack Engineer, Cozmo Realty",
+    avatar: local("testimonials/Sang_Hun_Yan.webp"),
+  },
+  {
+    quote: "They were very professional. The team was timely, the design was great and they went above and beyond my request.",
+    name: "Stacey Bae",
+    role: "Developer, Archmodal Classrooms",
+    avatar: local("testimonials/Stacey_Bae.webp"),
   },
 ];
 
-export const team = [
-  { name: "Arjun Patil", role: "Founder & Strategy", image: img.p2 },
-  { name: "Meera Joshi", role: "Creative Director", image: img.p1 },
-  { name: "Kabir Shah", role: "Head of Performance", image: img.p4 },
-  { name: "Tara Desai", role: "Social & Content Lead", image: img.p3 },
+export const faqs = [
+  {
+    q: "What does Website Vikreta do?",
+    a: "We design and build fast, modern websites and AI automation systems for businesses ready to grow, along with apps and CRMs, UI/UX design, and SEO and GEO. One team, from the first audit to handover.",
+  },
+  {
+    q: "Do you run paid ads?",
+    a: "No. We focus on organic growth: SEO, GEO, content and a website that converts. If you run paid media elsewhere, we'll make sure your site and tracking are ready for it.",
+  },
+  {
+    q: "Do you work with international clients?",
+    a: "Yes. We're based in Pune, India, and work with founders and teams across the globe. We're Top Rated on Upwork with 100% Job Success.",
+  },
+  {
+    q: "How long does a typical project take?",
+    a: "A focused website usually takes 2 to 4 weeks. Automation and app projects depend on scope. One image pipeline we built cut a client's process from 20 hours to 1 per collection. We'll give you a real timeline once we know the scope.",
+  },
+  {
+    q: "Can you work with our existing tools and tech stack?",
+    a: "Yes. We've built on Shopify, WhatsApp Business API, HubSpot, Zoho and delivery-partner integrations. We work with what you already have instead of asking you to start over.",
+  },
+  {
+    q: "Do you offer ongoing maintenance, or just one-time builds?",
+    a: "Both. Some clients want a one-time build and walk away. Others keep us on for updates and support long-term. Your call.",
+  },
 ];
 
-export const contact = {
-  email: "hello@websitevikreta.com",
-  phone: "+91 98765 43210",
-  city: "Pune, India",
-};
+export const posts = [
+  {
+    cat: "AI Automation",
+    t: "When Not to Automate: 7 Signs a Process Isn't Ready for AI",
+    d: "Automating a broken process only speeds up its failures. Seven signs, and what to fix first.",
+    slug: "when-not-to-automate",
+    image: img.table,
+  },
+  {
+    cat: "UI/UX",
+    t: "Designing for AI Browsers in 2026: UX for People and AI Agents",
+    d: "Labels, states, stable layouts and agent-ready forms: what changes when AI acts on your pages.",
+    slug: "designing-for-ai-browsers",
+    image: img.moodboard,
+  },
+  {
+    cat: "SEO & GEO",
+    t: "How to Get Cited by ChatGPT and Perplexity",
+    d: "What each engine uses as a source, how to make your pages citable, and how to tell if it's working.",
+    slug: "get-cited-by-chatgpt-perplexity",
+    image: img.stats,
+  },
+];

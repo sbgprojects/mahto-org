@@ -19,6 +19,8 @@ import {
   type MotionValue,
 } from "motion/react";
 
+import { brand } from "./data";
+
 export const ease = [0.16, 1, 0.3, 1] as const;
 
 /* ---------- smooth scrolling ---------- */
@@ -80,7 +82,15 @@ export function Photo({
   return (
     <div className={`wv-photo ${className}`}>
       {!failed && (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} onError={() => setFailed(true)} />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          unoptimized={src.endsWith(".svg")}
+          onError={() => setFailed(true)}
+        />
       )}
     </div>
   );
@@ -248,10 +258,14 @@ export function VelocityMarquee({
   items,
   baseVelocity = -3,
   className = "",
+  label,
+  star = true,
 }: {
-  items: string[];
+  items: ReactNode[];
   baseVelocity?: number;
   className?: string;
+  label?: string;
+  star?: boolean;
 }) {
   const reduce = useReducedMotion();
   const x = useMotionValue(0);
@@ -277,13 +291,13 @@ export function VelocityMarquee({
       {items.map((t, i) => (
         <span key={i} className="wv-mq-item">
           {t}
-          <Star />
+          {star && <Star />}
         </span>
       ))}
     </>
   );
   return (
-    <div className={`wv-mq ${className}`} aria-label={items.join(", ")}>
+    <div className={`wv-mq ${className}`} role="group" aria-label={label ?? items.filter((t) => typeof t === "string").join(", ")}>
       <motion.div className="wv-mq-track" style={{ x: pct }} aria-hidden>
         {row}
         {row}
@@ -369,6 +383,21 @@ export function CountUp({ to, suffix = "", decimals = 0 }: { to: number; suffix?
 }
 
 /* ---------- icons ---------- */
+/** The real Website Vikreta logo (horizontal lockup). */
+export function Logo({ light = false, height = 34 }: { light?: boolean; height?: number }) {
+  return (
+    <Image
+      src={light ? brand.logoLight : brand.logo}
+      alt="Website Vikreta"
+      width={Math.round((height * 1364) / 300)}
+      height={height}
+      unoptimized
+      priority
+      className="wv-logo-img"
+    />
+  );
+}
+
 export function Arrow({ size = 16, className = "" }: { size?: number; className?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={`wv-arrow ${className}`}>

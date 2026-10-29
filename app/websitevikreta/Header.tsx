@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { BASE, contact, navLinks, services } from "./data";
-import { Arrow, Chevron, Magnetic, Photo, ease } from "./ui";
+import { BASE, contact, navLinks, services, svcHref, type Service } from "./data";
+import { Arrow, Chevron, Logo, Magnetic, Photo, ease } from "./ui";
 
 export function Header() {
   const [open, setOpen] = useState(false); // desktop mega menu
@@ -57,7 +57,7 @@ export function Header() {
   return (
     <>
       <motion.header
-        className={`wv-header${solid || open ? " is-solid" : ""}`}
+        className={`wv-header${solid || open || drawer ? " is-solid" : ""}`}
         animate={{ y: hidden ? "-110%" : "0%" }}
         transition={{ duration: 0.35, ease }}
         onMouseLeave={hideSoon}
@@ -65,12 +65,7 @@ export function Header() {
       >
         <div className="wv-bar">
           <Link href={BASE} className="wv-logo" onClick={close} aria-label="Website Vikreta home">
-            <span className="wv-logo-mark" aria-hidden>
-              W<i />
-            </span>
-            <span className="wv-logo-word">
-              Website<b>Vikreta</b>
-            </span>
+            <Logo />
           </Link>
 
           <nav className="wv-nav" aria-label="Primary">
@@ -95,8 +90,8 @@ export function Header() {
 
           <div className="wv-bar-cta">
             <Magnetic>
-              <Link href={`${BASE}#contact`} className="wv-btn wv-btn-y wv-btn-sm" onClick={close}>
-                Start a project <Arrow size={14} />
+              <Link href={`${BASE}#contact`} className="wv-btn wv-btn-dark wv-btn-sm" onClick={close}>
+                Book a free audit <Arrow size={14} />
               </Link>
             </Magnetic>
             <button
@@ -126,7 +121,7 @@ export function Header() {
             >
               <div className="wv-mega-in">
                 <div className="wv-mega-list" role="tablist" aria-orientation="vertical" aria-label="Services">
-                  <p className="wv-eyebrow">What we do</p>
+                  <p className="wv-eyebrow">Services</p>
                   {services.map((s, i) => (
                     <button
                       key={s.id}
@@ -140,7 +135,10 @@ export function Header() {
                       onClick={() => setActive(s.id)}
                     >
                       <span className="wv-mega-num">0{i + 1}</span>
-                      <span className="wv-mega-tt">{s.title}</span>
+                      <span className="wv-mega-tt">
+                        {s.title}
+                        <small>{s.short}</small>
+                      </span>
                       <Arrow size={14} />
                     </button>
                   ))}
@@ -161,54 +159,7 @@ export function Header() {
                     exit={{ opacity: 0, x: -10 }}
                     transition={{ duration: 0.22, ease }}
                   >
-                    <div className="wv-mega-head">
-                      <div>
-                        <p className="wv-eyebrow is-y">{svc.kicker}</p>
-                        <h3>{svc.title}</h3>
-                        <p>{svc.blurb}</p>
-                      </div>
-                      <Link href={svc.href} className="wv-link" onClick={close}>
-                        Explore {svc.title} <Arrow size={14} />
-                      </Link>
-                    </div>
-                    <div className="wv-mega-groups">
-                      {svc.groups.map((g) => (
-                        <div key={g.title} className="wv-mega-group">
-                          <Link href={g.href} className="wv-mega-gt" onClick={close}>
-                            {g.title}
-                          </Link>
-                          <p>{g.blurb}</p>
-                          <ul>
-                            {g.leaves.map((l) => (
-                              <li key={l.t}>
-                                <Link href={l.href} onClick={close}>
-                                  {l.t}
-                                </Link>
-                                {l.tag && <span className="wv-chip">{l.tag}</span>}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={svc.id}
-                    className="wv-mega-card"
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3, ease }}
-                  >
-                    <Photo src={svc.image} alt="" sizes="320px" />
-                    <div className="wv-mega-card-tx">
-                      <span className="wv-eyebrow">Case study</span>
-                      <strong>{svc.proof.metric}</strong>
-                      <span>{svc.proof.label}</span>
-                    </div>
+                    <MegaPanel svc={svc} onNavigate={close} />
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -233,6 +184,73 @@ export function Header() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function MegaPanel({ svc, onNavigate }: { svc: Service; onNavigate: () => void }) {
+  return (
+    <div className="wv-mega-grid">
+      <div>
+        <div className="wv-mega-head">
+          <div>
+            <h3>{svc.title}</h3>
+            <p>{svc.blurb}</p>
+          </div>
+          <Link href={svcHref(svc)} className="wv-link" onClick={onNavigate}>
+            Explore {svc.title} <Arrow size={14} />
+          </Link>
+        </div>
+        <div className="wv-mega-cards">
+          {svc.solutions.map((sol, i) => (
+            <motion.div
+              key={sol.slug}
+              className="wv-mega-sol"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease, delay: 0.04 * i }}
+            >
+              <Link href={svcHref(svc, sol.slug)} className="wv-mega-gt" onClick={onNavigate}>
+                {sol.title}
+              </Link>
+              <p>{sol.blurb}</p>
+              <ul>
+                {sol.leaves.map((l) => (
+                  <li key={l.slug}>
+                    <Link href={svcHref(svc, sol.slug, l.slug)} onClick={onNavigate}>
+                      {l.t}
+                    </Link>
+                    {l.tag && <span className="wv-chip">{l.tag}</span>}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+        <div className="wv-mega-foot">
+          <div className="wv-mega-extras">
+            {svc.extras.map((e) => (
+              <span key={e.slug}>
+                <Link href={svcHref(svc, e.slug)} onClick={onNavigate}>
+                  {e.t}
+                </Link>
+                {e.sub && <em>{e.sub}</em>}
+              </span>
+            ))}
+          </div>
+          <Link href={`${BASE}#contact`} className="wv-btn wv-btn-y wv-btn-sm" onClick={onNavigate}>
+            {svc.cta} <Arrow size={14} />
+          </Link>
+        </div>
+      </div>
+      <Link href={`${BASE}/work/${svc.proof.slug}`} className="wv-mega-card" onClick={onNavigate}>
+        <Photo src={svc.image} alt="" sizes="280px" />
+        <div className="wv-mega-card-tx">
+          <span className="wv-eyebrow">Proof</span>
+          <strong>{svc.proof.metric}</strong>
+          <span>{svc.proof.label}</span>
+        </div>
+      </Link>
+    </div>
   );
 }
 
@@ -263,15 +281,18 @@ function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
                   transition={{ duration: 0.3, ease }}
                 >
                   <div className="wv-acc-pad">
-                    {s.groups.map((g) => (
-                      <div key={g.title} className="wv-acc-group">
-                        <Link href={g.href} className="wv-acc-gt" onClick={onNavigate}>
-                          {g.title}
+                    <Link href={svcHref(s)} className="wv-link" onClick={onNavigate}>
+                      Explore {s.title} <Arrow size={14} />
+                    </Link>
+                    {s.solutions.map((sol) => (
+                      <div key={sol.slug} className="wv-acc-group">
+                        <Link href={svcHref(s, sol.slug)} className="wv-acc-gt" onClick={onNavigate}>
+                          {sol.title}
                         </Link>
                         <ul>
-                          {g.leaves.map((l) => (
-                            <li key={l.t}>
-                              <Link href={l.href} onClick={onNavigate}>
+                          {sol.leaves.map((l) => (
+                            <li key={l.slug}>
+                              <Link href={svcHref(s, sol.slug, l.slug)} onClick={onNavigate}>
                                 {l.t}
                               </Link>
                               {l.tag && <span className="wv-chip">{l.tag}</span>}
@@ -280,8 +301,15 @@ function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
                         </ul>
                       </div>
                     ))}
-                    <Link href={s.href} className="wv-link" onClick={onNavigate}>
-                      Explore {s.title} <Arrow size={14} />
+                    <div className="wv-acc-extras">
+                      {s.extras.map((e) => (
+                        <Link key={e.slug} href={svcHref(s, e.slug)} onClick={onNavigate}>
+                          {e.t}
+                        </Link>
+                      ))}
+                    </div>
+                    <Link href={`${BASE}#contact`} className="wv-btn wv-btn-y wv-btn-sm" onClick={onNavigate}>
+                      {s.cta} <Arrow size={14} />
                     </Link>
                   </div>
                 </motion.div>
@@ -300,8 +328,8 @@ function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
         ))}
       </div>
       <motion.div {...item(services.length + navLinks.length)} className="wv-drawer-foot">
-        <Link href={`${BASE}#contact`} className="wv-btn wv-btn-y" onClick={onNavigate}>
-          Start a project <Arrow size={14} />
+        <Link href={`${BASE}#contact`} className="wv-btn wv-btn-dark" onClick={onNavigate}>
+          Book a free audit <Arrow size={14} />
         </Link>
         <a href={`mailto:${contact.email}`}>{contact.email}</a>
       </motion.div>
