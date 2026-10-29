@@ -82,15 +82,7 @@ export function Photo({
   return (
     <div className={`wv-photo ${className}`}>
       {!failed && (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          priority={priority}
-          unoptimized={src.endsWith(".svg")}
-          onError={() => setFailed(true)}
-        />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} onError={() => setFailed(true)} />
       )}
     </div>
   );
@@ -258,14 +250,10 @@ export function VelocityMarquee({
   items,
   baseVelocity = -3,
   className = "",
-  label,
-  star = true,
 }: {
-  items: ReactNode[];
+  items: string[];
   baseVelocity?: number;
   className?: string;
-  label?: string;
-  star?: boolean;
 }) {
   const reduce = useReducedMotion();
   const x = useMotionValue(0);
@@ -291,13 +279,13 @@ export function VelocityMarquee({
       {items.map((t, i) => (
         <span key={i} className="wv-mq-item">
           {t}
-          {star && <Star />}
+          <Star />
         </span>
       ))}
     </>
   );
   return (
-    <div className={`wv-mq ${className}`} role="group" aria-label={label ?? items.filter((t) => typeof t === "string").join(", ")}>
+    <div className={`wv-mq ${className}`} aria-label={items.join(", ")}>
       <motion.div className="wv-mq-track" style={{ x: pct }} aria-hidden>
         {row}
         {row}
@@ -365,7 +353,7 @@ export function CountUp({ to, suffix = "", decimals = 0 }: { to: number; suffix?
   const inView = useInView(ref, { once: true, margin: "-10% 0px" });
   const reduce = useReducedMotion();
   const mv = useMotionValue(0);
-  const text = useTransform(mv, (v) => `${v.toFixed(decimals)}${suffix}`);
+  const text = useTransform(mv, (v) => `${Number(v.toFixed(decimals)).toLocaleString("en-US")}${suffix}`);
   useEffect(() => {
     if (!inView) return;
     if (reduce) {
@@ -384,7 +372,7 @@ export function CountUp({ to, suffix = "", decimals = 0 }: { to: number; suffix?
 
 /* ---------- icons ---------- */
 /** The real Website Vikreta logo (horizontal lockup). */
-export function Logo({ light = false, height = 34 }: { light?: boolean; height?: number }) {
+export function Logo({ light = false, height = 30 }: { light?: boolean; height?: number }) {
   return (
     <Image
       src={light ? brand.logoLight : brand.logo}
