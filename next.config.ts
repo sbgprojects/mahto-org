@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
       beforeFiles: [
         { source: "/capabl.in", destination: "/capabl" },
         { source: "/harrytang.xyz", destination: "/harrytang" },
+        { source: "/chauveirishrestaurant.com", destination: "/chauve" },
+        { source: "/chauveirishrestaurant.com/:path*", destination: "/chauve/:path*" },
       ],
       afterFiles: [],
       fallback: [],
