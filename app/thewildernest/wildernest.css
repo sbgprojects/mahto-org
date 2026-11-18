@@ -1,0 +1,478 @@
+/* Wildernest Farms review page — matches the live Wix site and its review embed. Scoped under .wn. */
+.wn {
+  --green: #294b35;
+  --green-d: #1d3928;
+  --sage: #46634a;
+  --ink: #20251f;
+  --muted: #646a63;
+  --line: #e4e3dd;
+  --page: #f5f2ec;
+  --head: #faf8f4;
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.wn *,
+.wn *::before,
+.wn *::after {
+  box-sizing: border-box;
+}
+:where(.wn) h1,
+:where(.wn) h2,
+:where(.wn) p,
+:where(.wn) ol {
+  margin: 0;
+  padding: 0;
+}
+:where(.wn) a {
+  color: inherit;
+  text-decoration: none;
+}
+:where(.wn) button {
+  font: inherit;
+  cursor: pointer;
+}
+.wn :focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 3px;
+}
+.wn-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* header (as on the Wix site) */
+.wn-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--head);
+  border-bottom: 1px solid rgba(32, 37, 31, 0.06);
+}
+.wn-header-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+.wn-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.wn-logo img:first-child {
+  width: 46px;
+  height: auto;
+}
+.wn-logo img:last-child {
+  width: 150px;
+  height: auto;
+}
+.wn-nav {
+  display: none;
+}
+.wn-burger {
+  display: grid;
+  gap: 6px;
+  padding: 10px 6px;
+  background: none;
+  border: 0;
+}
+.wn-burger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--ink);
+}
+.wn-sheet {
+  display: grid;
+  padding: 6px 20px 16px;
+  border-top: 1px solid var(--line);
+}
+.wn-sheet a {
+  padding: 12px 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line);
+}
+
+/* intro + panel (from the existing review embed) */
+.wn-main {
+  flex: 1;
+  padding: 40px 16px 64px;
+  background: linear-gradient(135deg, #e9e2d5, #f5f0e7 48%, #d9e0d1);
+}
+.wn-intro {
+  text-align: center;
+  margin-bottom: 26px;
+}
+.wn-eyebrow {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--sage);
+  margin-bottom: 13px;
+}
+.wn h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: normal;
+  font-size: clamp(30px, 5vw, 49px);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.wn-lead {
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #51594f;
+}
+.wn-panel {
+  max-width: 790px;
+  margin: 0 auto;
+  padding: 24px 18px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 18px;
+  box-shadow: 0 15px 50px rgba(40, 55, 39, 0.12);
+}
+.wn-step {
+  display: flex;
+  gap: 13px;
+  margin-bottom: 14px;
+}
+.wn-step-gap {
+  margin-top: 26px;
+}
+.wn-num {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-weight: bold;
+}
+.wn-step h2 {
+  font-size: 18px;
+  margin: 2px 0 3px;
+}
+.wn-step p {
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.wn-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.wn-chip {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1.5px solid #c9cec7;
+  background: #fff;
+  color: var(--ink);
+  font-size: 14.5px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.wn-chip:hover:not(:disabled) {
+  border-color: var(--green);
+}
+.wn-chip.is-on {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+.wn-chip:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.wn-extra {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.wn-extra input,
+.wn textarea {
+  width: 100%;
+  border: 1px solid #c9cec7;
+  border-radius: 9px;
+  padding: 13px 15px;
+  font: 15px/1.6 Arial, sans-serif;
+  color: #252a25;
+  background: #fff;
+  outline: none;
+}
+.wn-extra input:focus,
+.wn textarea:focus {
+  border-color: #456d4d;
+  box-shadow: 0 0 0 3px rgba(69, 109, 77, 0.1);
+}
+.wn textarea {
+  display: block;
+  min-height: 190px;
+  resize: vertical;
+  background: #faf8f1;
+  border-color: #e1d9c8;
+}
+.wn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 20px;
+  padding: 15px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--green);
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.2s;
+}
+.wn-primary:hover:not(:disabled) {
+  background: var(--green-d);
+}
+.wn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.wn-hint {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 12.5px;
+  color: #81877f;
+}
+.wn-progress {
+  margin-top: 18px;
+  padding: 16px;
+  background: #f0f4ef;
+  border-radius: 10px;
+}
+.wn-progress-msg {
+  display: flex;
+  justify-content: space-between;
+  color: var(--green);
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.wn-track {
+  height: 9px;
+  overflow: hidden;
+  background: #d9e3d8;
+  border-radius: 20px;
+}
+.wn-fill {
+  width: 38%;
+  height: 100%;
+  background: linear-gradient(90deg, #294b35, #69916c);
+  border-radius: 20px;
+  animation: wn-move 1.2s ease-in-out infinite;
+}
+@keyframes wn-move {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+.wn-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: 10px;
+}
+.wn-text-btn {
+  padding: 8px 0;
+  background: none;
+  border: 0;
+  color: var(--sage);
+  font-size: 13.5px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.wn-status {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.wn-ok {
+  background: #edf5ec;
+  color: #34563b;
+}
+.wn-err {
+  background: #fff0ed;
+  color: #a43b2b;
+}
+.wn-how {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+}
+.wn-how li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f0f4ef;
+  font-size: 13px;
+  color: var(--green);
+}
+.wn-how b {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+}
+
+/* footer (as on the Wix site) */
+.wn-footer {
+  background: var(--page);
+  padding: 44px 24px 26px;
+}
+.wn-footer-top {
+  display: grid;
+  gap: 22px;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--ink);
+}
+.wn-footer-logo {
+  width: 170px;
+  height: auto;
+}
+.wn-footer-mid {
+  display: grid;
+  gap: 4px;
+  color: #5f625c;
+  font-size: 15px;
+}
+.wn-footer-name {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--ink);
+}
+.wn-social {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.wn-social a {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+}
+.wn-ig {
+  border-radius: 6px;
+  background: #e1306c;
+}
+.wn-footer-base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding-top: 22px;
+  font-size: 14px;
+  color: #9a9c96;
+}
+.wn-footer-base span:first-child {
+  color: var(--ink);
+}
+
+@media (min-width: 640px) {
+  .wn-panel {
+    padding: 32px;
+  }
+  .wn-main {
+    padding: 56px 24px 80px;
+  }
+}
+@media (max-width: 420px) {
+  .wn-how {
+    grid-template-columns: 1fr;
+  }
+}
+@media (min-width: 1100px) {
+  .wn-header-in {
+    padding: 12px 26px;
+  }
+  .wn-logo img:first-child {
+    width: 58px;
+  }
+  .wn-logo img:last-child {
+    width: 198px;
+  }
+  .wn-nav {
+    display: flex;
+    gap: 34px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .wn-nav a:hover {
+    color: var(--sage);
+  }
+  .wn-burger {
+    display: none;
+  }
+  .wn-footer-top {
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+  }
+  .wn-footer-mid {
+    text-align: center;
+  }
+  .wn-social {
+    justify-content: flex-end;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wn-fill {
+    animation: none;
+    width: 100%;
+  }
+}
+
+.wn ::selection {
+  background: #294b35;
+  color: #fff;
+}
+#wn-ready {
+  scroll-margin-top: 90px;
+}

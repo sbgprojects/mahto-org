@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "assets.harrytang.xyz" },
+      { protocol: "https", hostname: "static.wixstatic.com" },
     ],
   },
   // /capabl.in is the shareable URL for the Capabl site (served from /capabl).
